@@ -16,9 +16,32 @@ $LOAD_PATH.unshift( Gem_Dir + "/lib" )
 
 Bacon.summary_on_exit
 
-require 'Dex_Rack'
 require 'Bacon_Colored'
 require 'pry'
+ENV['RACK_ENV']='test'
+require 'rack/test'
+require 'Dex/Rack'
+
+class Bacon::Context
+  include Rack::Test::Methods
+
+  def app
+    Dex::Rack_App
+  end
+
+  def should_render txt
+    last_response.should.be.ok
+    r = txt.respond_to?(:~) ? txt : %r!#{txt}!
+    last_response.body.should.match r
+  end
+
+  def should_redirect_to url, status = 303
+    last_response.status.should == status
+    last_response['Location'].sub( %r!http://(www.)?example.(com|org)!, '' )
+    .should == '/'
+  end
+    
+end # === class Bacon::Context
 
 
 # ======== Include the tests.
