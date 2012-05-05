@@ -23,14 +23,14 @@ xhtml_strict do
       eval File.read(vars[:view_file]), nil, vars[:view_file], 1
     
       
-    if vars[:app].request.path_info == '/'
     div.footer! {
+    if vars[:app].request.path_info == '/'
       %~
         <span>Background from: </span>
         <a href="http://www.backgroundlabs.com" title="Background Labs"><img src="http://www.backgroundlabs.com/images/backgroundlabs88x15.gif" border="0" alt="Background Labs"/></a>
       ~
-    }
     end
+    }
   }
 end
 

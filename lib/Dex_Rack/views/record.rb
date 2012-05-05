@@ -42,7 +42,7 @@ div.content! {
     }
   }
 
-    h3 "Backtrace:"
+  h3 "Backtrace:"
   div.backtrace! {
     vars[:record][:backtrace] 
   }

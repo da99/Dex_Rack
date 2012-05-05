@@ -16,8 +16,6 @@ div.container {
 #header, #footer {
   background: url('/images/texture/9.jpg') grey;
   padding: 5px 10px 10px 20px ;
-  -moz-border-radius: 0 0 10px 10px;
-  border-radius: 0 0 10px 10px;
 }
 
 #header, h1, h2, h3 {
@@ -27,6 +25,9 @@ div.container {
 #footer {
   color: lightgrey;
   font-size: 80%;
+  -moz-border-radius: 0 0 10px 10px;
+  border-radius: 0 0 10px 10px;
+  min-height: 30px;
 }
 
 #header h1 {
