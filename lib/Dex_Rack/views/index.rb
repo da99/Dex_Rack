@@ -14,15 +14,16 @@ div.header! {
     end
 
     div.content! {
+      
 if vars[:app].request.path_info == '/'
-  div {
-    div { 
-      span "Database:"
-      span  vars[:app].dex.db_name.to_s
+  table {
+    tr { 
+      td.key "Database:"
+      td.val  vars[:app].dex.db_name.to_s
     }
-    div {
-      span "Table:"
-      span vars[:app].dex.table_name.to_s
+    tr {
+      td.key "Table:"
+      td.val vars[:app].dex.table_name.to_s
     }
   }
 end 
@@ -57,7 +58,7 @@ else
         }
         span.time( vars[:app].human_time(db[:created_at]) )
         span.status.send(vars[:app].status_to_word(db[:status]).downcase, vars[:app].status_to_word(db[:status]))
-        span.exception db[:exception]
+        span.exception "#{db[:exception]}:"
         span.message db[:message]
       }
     }

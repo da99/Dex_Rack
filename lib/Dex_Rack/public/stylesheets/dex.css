@@ -2,6 +2,7 @@
 body {
   background: url("/images/texture/straw-flowers.gif") repeat-x 0 29px  #FCFBF0;
   background: #FCFBF0;
+  background: #FAFAFA;
   font-family: 'Oxygen', sans-serif; 
 }
 
@@ -19,7 +20,7 @@ div.container {
   border-radius: 0 0 10px 10px;
 }
 
-#header {
+#header, h1, h2, h3 {
   font-family: 'Bree Serif', serif;
 }
 
@@ -58,10 +59,6 @@ a#hide_backtrace {
   visibility: hidden;
 }
 
-div#backtrace {
-  display: none;
-}
-
 div.line:hover, div.file:hover {
   background: lightyellow;
 }
@@ -80,12 +77,30 @@ div.line:hover, div.file:hover {
 
 table {
   margin: 10px 10px 10px 0;
-  -moz-border-radius: 5px;
-  border-radius:      5px;
-  background: lightgrey;
+}
+
+table tr:first-child td:first-child {
+  -moz-border-radius: 5px 0 0 0;
+  border-radius:      5px 0 0 0;
+}
+
+table tr:first-child td:last-child {
+  -moz-border-radius: 0 5px 0 0;
+  border-radius:      0 5px 0 0;
+}
+
+table tr:last-child td:first-child {
+  -moz-border-radius: 0 0 0 5px;
+  border-radius:      0 0 0 5px;
+}
+
+table tr:last-child td:last-child {
+  -moz-border-radius: 0 0 5px 0;
+  border-radius:      0 0 5px 0;
 }
 
 td {
+  background: lightgrey;
   padding: 8px;
 }
 
@@ -174,3 +189,16 @@ div.file {
 div.record_in_list {
   padding: 2px 0;
 }
+
+#toggle_backtrace {
+  display: none;
+}
+
+h3 {
+  font-size: 150%; 
+  margin-bottom: 10px;
+}
+#backtrace {
+  padding-left: 20px;
+}
+

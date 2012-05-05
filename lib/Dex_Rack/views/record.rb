@@ -33,15 +33,16 @@ div.content! {
     }
   end
 
-  div.sixteen.columns.toggle_backtrace! {
-    div.eight.columns.alpha {
+  div.toggle_backtrace! {
+    div {
       a.button.show_backtrace!(:href=>"#show") { "Show Backtrace" }
     }
-    div.eight.columns.omega {
+    div.omega {
       a.button.hide_backtrace!(:href=>"#hide") { "Hide Backtrace" }
     }
   }
 
+    h3 "Backtrace:"
   div.backtrace! {
     vars[:record][:backtrace] 
   }
