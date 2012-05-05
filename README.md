@@ -8,6 +8,7 @@ A Ruby gem that provides a web frontend for exceptions logged with
 Installation
 ------------
 
+    sudo apt-get install sqlite3
     gem install Dex_Rack
 
 Usage
