@@ -1,5 +1,6 @@
 
 
+
 div.header! {
   h1 {
     span.exception "#{vars[:record][:exception]}:"
@@ -15,33 +16,35 @@ div.header! {
       }
     end
 
-    div.content! {
-div {
-  span.status.send vars[:status_class].downcase, vars[:status_word]
-  a.button(:href=>"/#{vars[:record][:id]}/toggle") { "Toggle" }
-}
+div.content! {
+  div {
+    span.status.send vars[:status_class].downcase, vars[:status_word]
+    a.button(:href=>"/#{vars[:record][:id]}/toggle") { "Toggle" }
+  }
 
-unless vars[:table_keys].empty?
-  div.sixteen.columns.more_info! {
-    vars[:table_keys].each { |k|
-      div.two.columns.alpha { k.inspect }
-      div.fourteen.columns.omega { vars[:record][k] }
+  unless vars[:table_keys].empty?
+    table {
+      vars[:table_keys].each { |k|
+        tr {
+          td.key k.inspect 
+          td.val vars[:record][k]
+        }
+      }
+    }
+  end
+
+  div.sixteen.columns.toggle_backtrace! {
+    div.eight.columns.alpha {
+      a.button.show_backtrace!(:href=>"#show") { "Show Backtrace" }
+    }
+    div.eight.columns.omega {
+      a.button.hide_backtrace!(:href=>"#hide") { "Hide Backtrace" }
     }
   }
-end
 
-div.sixteen.columns.toggle_backtrace! {
-  div.eight.columns.alpha {
-    a.button.show_backtrace!(:href=>"#show") { "Show Backtrace" }
+  div.backtrace! {
+    vars[:record][:backtrace] 
   }
-  div.eight.columns.omega {
-    a.button.hide_backtrace!(:href=>"#hide") { "Hide Backtrace" }
-  }
+
+
 }
-
-div.backtrace! {
-  vars[:record][:backtrace] 
-}
-
-
-    }

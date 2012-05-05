@@ -1,4 +1,4 @@
-html do
+xhtml_strict do
   
   head {
     

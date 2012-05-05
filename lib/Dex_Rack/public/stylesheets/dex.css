@@ -66,9 +66,37 @@ div.line:hover, div.file:hover {
   background: lightyellow;
 }
 
-div#more_info div.alpha { 
+#more_info div.key { 
+  font-weight: bold;
+  text-align: right;
+  display: inline-block;
+  min-width: 200px;
+}
+
+#more_info div.val {
+  display: inline-block;
+}
+
+
+table {
+  margin: 10px 10px 10px 0;
+  -moz-border-radius: 5px;
+  border-radius:      5px;
+  background: lightgrey;
+}
+
+td {
+  padding: 8px;
+}
+
+td.key { 
   text-align: right;
   font-weight: bold;
+  padding: 8px 10px 8px 10px;
+}
+
+td.val {
+  background: white;
 }
 
 span.exception {
