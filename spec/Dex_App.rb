@@ -3,6 +3,11 @@ describe "get /" do
   
   behaves_like 'Test DB'
 
+  it "renders message when there are no exceptions" do
+    get "/"
+    should_render %!No exceptions!
+  end
+
   it "renders a recent list of 10" do
       5.times { |i| Dex.insert except("Err: #{i}") }
       
@@ -10,11 +15,6 @@ describe "get /" do
       5.times { |i|
         last_response.body.should.match %r!Err: #{i}!
       }
-  end
-
-  it "renders message when there are no exceptions" do
-    get "/"
-    last_response.body.should.match %r!No exceptions!
   end
 
 end # === get /

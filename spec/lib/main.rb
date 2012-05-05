@@ -1,4 +1,3 @@
-
 require 'rubygems'
 require 'bundler'
 begin
@@ -18,10 +17,10 @@ Bacon.summary_on_exit
 
 require 'Bacon_Colored'
 require 'pry'
-ENV['RACK_ENV']='test'
 require 'rack/test'
 require 'Dex_Rack'
 
+Dex_Rack.set :environment, :test
 Dex_Rack.set :dex, ( Dex.db(":memory:") && Dex )
 
 def except e

@@ -174,6 +174,8 @@ class Dex_Rack
     n = nil if n > total
     p = page - 1
     p = nil if p < 1
+    offset = div * (page - 1)
+    offset = 0 if offset < 1
 
     Hash[ 
       
@@ -184,7 +186,7 @@ class Dex_Rack
       
       :count => count,
       :limit => div,
-      :offset => div * (page - 1)
+      :offset => offset
       
     ]
   end
