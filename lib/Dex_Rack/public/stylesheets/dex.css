@@ -4,6 +4,7 @@ body {
   background: #FCFBF0;
   background: #FAFAFA;
   font-family: 'Oxygen', sans-serif; 
+  padding: 0 40px 40px 40px;
 }
 
 div.container {
@@ -15,7 +16,6 @@ div.container {
 #header, #footer {
   background: url('/images/texture/9.jpg') grey;
   padding: 5px 10px 10px 20px ;
-  margin: 0 20px;
   -moz-border-radius: 0 0 10px 10px;
   border-radius: 0 0 10px 10px;
 }
@@ -49,10 +49,12 @@ body.resolved #header h1 {
 #nav {
   padding: 0 20px;
   font-size: small;
+  background: white;
 }
 
 #content {
-  padding: 10px 20px;
+  padding: 10px 20px 20px 20px;
+  background: white;
 }
 
 a#hide_backtrace {
@@ -111,7 +113,7 @@ td.key {
 }
 
 td.val {
-  background: white;
+  background: #FFFFE6;
 }
 
 span.exception {
