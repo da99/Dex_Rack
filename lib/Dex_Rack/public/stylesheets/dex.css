@@ -1,0 +1,149 @@
+/* From: http://css-tricks.com/perfect-full-page-background-image/ */
+body {
+  background: url("/images/texture/straw-flowers.gif") repeat-x 0 29px  #FCFBF0;
+  background: #FCFBF0;
+  font-family: 'Oxygen', sans-serif; 
+}
+
+div.container {
+  background: white;
+  -moz-border-radius: 0 0 10px 10px;
+  border-radius: 0 0 10px 10px;
+}
+
+#header, #footer {
+  background: url('/images/texture/9.jpg') grey;
+  padding: 5px 10px 10px 20px ;
+  margin: 0 20px;
+  -moz-border-radius: 0 0 10px 10px;
+  border-radius: 0 0 10px 10px;
+}
+
+#header {
+  font-family: 'Bree Serif', serif;
+}
+
+#footer {
+  color: lightgrey;
+  font-size: 80%;
+}
+
+#header h1 {
+  font-size: 200%;
+  color: white;
+}
+
+body.unresolved div#header h1 {
+  color: pink;
+}
+
+
+body.resolved div#header h1 {
+  color: white;
+}
+
+#nav {
+  padding: 0 20px;
+  font-size: small;
+}
+
+#content {
+  padding: 10px 20px;
+}
+
+div#toggle_backtrace div.omega {
+  text-align: right;
+}
+
+a#hide_backtrace {
+  visibility: hidden;
+}
+
+div#backtrace {
+  display: none;
+}
+
+div.line:hover, div.file:hover {
+  background: lightyellow;
+}
+
+div#more_info div.alpha { 
+  text-align: right;
+  font-weight: bold;
+}
+
+span.exception {
+  font-weight: bold;
+}
+
+
+span.status, a.button, a:link {
+  display: inline-block;
+  padding: 5px 8px;
+  font-size: 8pt;
+  font-weight: bold;
+  text-transform: uppercase;
+	text-align: center;
+  -moz-border-radius: 5px;
+  border-radius:      5px;
+  color: white;
+}
+
+a:link {
+  color: #8C728A; 
+	text-shadow: none;
+}
+
+a:visited {
+  color: #B87FB3;
+}
+
+a:hover {
+  color: pink;
+  background: grey;
+}
+
+span.status {
+  background: grey;
+}
+
+a.button:link {
+  background: lightgrey;
+  color: #B87FB3;
+}
+
+a.button:visited {
+  color: grey;
+}
+
+a.button:hover, a.button:active {
+  color: pink;
+  background: grey;
+}
+
+div.unresolved h1, span.unresolved {
+  color: pink;
+}
+
+div.resolved h1, span.resolved {
+  color: white;
+}
+
+span.num {
+  font-weight: bold;
+}
+
+div.line {
+  padding: 5px;
+}
+
+div.file {
+  margin: 0 0 10px 0;
+  font-weight: bold;
+  padding: 5px;
+}
+
+
+div.record_in_list {
+  padding: 2px 0;
+}

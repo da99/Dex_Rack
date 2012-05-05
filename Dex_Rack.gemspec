@@ -29,4 +29,5 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'thin'
   s.add_runtime_dependency 'sinatra-reloader'
   s.add_runtime_dependency 'chronic_duration'
+  s.add_runtime_dependency 'Dex'
 end

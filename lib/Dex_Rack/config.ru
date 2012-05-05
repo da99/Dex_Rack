@@ -1,7 +1,7 @@
 
 require "sinatra/base"
 require "sinatra/reloader"
-require "Dex/Rack_App"
+require "Dex_Rack"
 
 
-run Dex::Rack_App
+run Dex_Rack

@@ -26,7 +26,7 @@ class Bacon::Context
   include Rack::Test::Methods
 
   def app
-    Dex::Rack_App
+    Dex_Rack
   end
 
   def should_render txt
