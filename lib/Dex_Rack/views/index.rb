@@ -1,4 +1,19 @@
+div.header! {
+  h1 {
+    span.exception vars[:title]
+    span.message   vars[:message]
+  }
+}
 
+    if vars[:app].request.path_info != '/'
+      div.nav! {
+        a(:href=>'/') { "Home"}
+        span.towards ">>"
+        span.location vars[:title]
+      }
+    end
+
+    div.content! {
 if vars[:app].request.path_info == '/'
   div {
     div { 
@@ -49,3 +64,4 @@ else
   }
   
 end
+    }

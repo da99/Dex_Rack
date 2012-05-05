@@ -38,7 +38,7 @@ class Dex_Rack
 
     if r
       vars= Hash[
-        :title=>r[:exception],
+        :title=>"#{r[:exception]}: #{r[:message]}",
         :record=>r,
         :table_keys=>(r.keys - [:exception, :message, :backtrace, :status]),
         :app=>self

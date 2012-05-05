@@ -1,32 +1,47 @@
-      div.sixteen.columns {
-        h2 "#{vars[:record][:message]}" 
 
+
+div.header! {
+  h1 {
+    span.exception "#{vars[:record][:exception]}:"
+    span.message   vars[:record][:message]
+  }
+}
+
+    if vars[:app].request.path_info != '/'
+      div.nav! {
+        a(:href=>'/') { "Home"}
+        span.towards ">>"
+        span.location vars[:title]
       }
-      div {
-        span.status.send vars[:status_class].downcase, vars[:status_word]
-        a.button(:href=>"/#{vars[:record][:id]}/toggle") { "Toggle" }
-      }
+    end
 
-      unless vars[:table_keys].empty?
-        div.sixteen.columns.more_info! {
-          vars[:table_keys].each { |k|
-            div.two.columns.alpha { k.inspect }
-            div.fourteen.columns.omega { vars[:record][k] }
-          }
-        }
-      end
+    div.content! {
+div {
+  span.status.send vars[:status_class].downcase, vars[:status_word]
+  a.button(:href=>"/#{vars[:record][:id]}/toggle") { "Toggle" }
+}
 
-      div.sixteen.columns.toggle_backtrace! {
-        div.eight.columns.alpha {
-          a.show_backtrace!(:href=>"#show") { "Show Backtrace" }
-        }
-        div.eight.columns.omega {
-          a.hide_backtrace!(:href=>"#hide") { "Hide Backtrace" }
-        }
-      }
+unless vars[:table_keys].empty?
+  div.sixteen.columns.more_info! {
+    vars[:table_keys].each { |k|
+      div.two.columns.alpha { k.inspect }
+      div.fourteen.columns.omega { vars[:record][k] }
+    }
+  }
+end
 
-      div.backtrace! {
-        vars[:record][:backtrace] 
-      }
+div.sixteen.columns.toggle_backtrace! {
+  div.eight.columns.alpha {
+    a.button.show_backtrace!(:href=>"#show") { "Show Backtrace" }
+  }
+  div.eight.columns.omega {
+    a.button.hide_backtrace!(:href=>"#hide") { "Hide Backtrace" }
+  }
+}
+
+div.backtrace! {
+  vars[:record][:backtrace] 
+}
 
 
+    }

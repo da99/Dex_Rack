@@ -33,12 +33,15 @@ div.container {
   color: white;
 }
 
-body.unresolved div#header h1 {
+body.unresolved #header h1 {
   color: pink;
 }
 
+body.unresolved #header h1 span.message {
+  color: white;
+}
 
-body.resolved div#header h1 {
+body.resolved #header h1 {
   color: white;
 }
 
@@ -49,10 +52,6 @@ body.resolved div#header h1 {
 
 #content {
   padding: 10px 20px;
-}
-
-div#toggle_backtrace div.omega {
-  text-align: right;
 }
 
 a#hide_backtrace {

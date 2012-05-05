@@ -19,24 +19,8 @@ html do
   }
   
   body(:class=>[vars[:status_class]].compact.join(' ')) {
-
-
-    div.header! {
-      h1 vars[:title]
-    }
-
-
-    if vars[:app].request.path_info != '/'
-      div.nav! {
-        a(:href=>'/') { "Home"}
-        span.towards ">>"
-        span.location vars[:title]
-      }
-    end
     
-    div.content! {
       eval File.read(vars[:view_file]), nil, vars[:view_file], 1
-    }
     
       
     if vars[:app].request.path_info == '/'
