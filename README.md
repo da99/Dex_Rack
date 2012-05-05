@@ -2,7 +2,8 @@
 Dex\_Rack
 ================
 
-A Ruby gem.
+A Ruby gem that provides a web frontend for exceptions logged with 
+[Dex](https://github.com/da99/Dex).
 
 Installation
 ------------
