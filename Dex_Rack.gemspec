@@ -9,8 +9,11 @@ Gem::Specification.new do |s|
   s.authors     = ["da99"]
   s.email       = ["i-hate-spam-45671204@mailinator.com"]
   s.homepage    = "https://github.com/da99/Dex_Rack"
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.summary     = %q{A Rack app to display Dex exceptions.}
+  s.description = %q{
+It is a web-frontend for Dex. 
+Update and view exceptions logged with the Dex gem.
+  }
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")

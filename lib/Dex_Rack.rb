@@ -63,7 +63,7 @@ class Dex_Rack
     r = dex.filter(:id=>id).first
     s = r[:status] == 0 ? 1 : 0
     dex.filter(:id=>id).update(:status=>s)
-    redirect to("/#{r[:id]}"), 303
+    redirect to("/#{r[:id]}"), 302
   end
 
   delete "/:id" do | id |
@@ -158,13 +158,16 @@ class Dex_Rack
 
   def page_nav count, div, page = :last
     count = count.to_i
+
     div   = div.to_i
     total = ( count / Float(div) ).ceil
     page  = total if page == :last
     page  = page.to_i
     
-    if total < 1 || page < 1 || page > total || div < 2
-      return nil 
+    if count > 0 
+      if total < 1 || page < 1 || page > total || div < 2
+        return nil 
+      end
     end
     
     n = page + 1

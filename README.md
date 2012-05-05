@@ -12,10 +12,18 @@ Installation
 Usage
 ------
 
-    require "Dex_Rack"
-    
-    Dex_Rack
+Create a `config.ru` file:
 
+    require "Dex_Rack"
+
+    Dex_Rack.set :dex, ( Dex.db("My.SQLITE.file.db") && Dex )
+    run Dex_Rack
+
+In your shell:
+
+    rackup -p 3000
+
+Visit: [http://localhost:3000](http://localhost:3000)
 
 Run Tests
 ---------
@@ -25,9 +33,4 @@ Run Tests
     bundle update
     bundle exec bacon spec/lib/main.rb
 
-"I hate writing."
------------------------------
-
-If you know of existing software that makes the above redundant,
-please tell me. The last thing I want to do is maintain code.
 

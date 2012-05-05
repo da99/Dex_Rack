@@ -20,7 +20,23 @@ require 'Bacon_Colored'
 require 'pry'
 ENV['RACK_ENV']='test'
 require 'rack/test'
-require 'Dex/Rack'
+require 'Dex_Rack'
+
+Dex_Rack.set :dex, ( Dex.db(":memory:") && Dex )
+
+def except e
+  begin
+    raise e
+  rescue Object => e
+    $!
+  end
+end
+
+shared "Test DB" do
+  before {
+    Dex.table.delete
+  }
+end
 
 class Bacon::Context
   include Rack::Test::Methods
@@ -38,7 +54,7 @@ class Bacon::Context
   def should_redirect_to url, status = 303
     last_response.status.should == status
     last_response['Location'].sub( %r!http://(www.)?example.(com|org)!, '' )
-    .should == '/'
+    .should == url
   end
     
 end # === class Bacon::Context
