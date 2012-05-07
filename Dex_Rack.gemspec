@@ -32,5 +32,5 @@ Update and view exceptions logged with the Dex gem.
   s.add_runtime_dependency 'thin'
   s.add_runtime_dependency 'sinatra-reloader'
   s.add_runtime_dependency 'chronic_duration'
-  s.add_runtime_dependency 'Dex'
+  s.add_runtime_dependency 'Dex', ">= 0.2.2" 
 end
