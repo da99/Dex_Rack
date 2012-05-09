@@ -110,7 +110,7 @@ class Dex_Rack
       vars = nav.merge(
         Hash[
           :title => "Dex List",
-          :list  => dex.limit(nav[:limit], nav[:offset]).to_a.reverse,
+          :list  => list_recent(nav[:limit], nav[:offset]),
           :app => self
         ])
 

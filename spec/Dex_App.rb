@@ -3,7 +3,7 @@ describe "Dex_Rack" do
   
   it "has methods that can be overridden" do
     m = Module.new {
-    def recent *args
+    def list_recent *args
       'ok'
     end
 
@@ -17,7 +17,7 @@ describe "Dex_Rack" do
     end
 
     get "/new-recent" do
-      recent
+      list_recent
     end
 
     }
