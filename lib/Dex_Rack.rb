@@ -13,7 +13,7 @@ class Dex_Rack
   use Rack::Lint
   
   set :public_folder, RACK_DIR + "/public"
-  set :views_folder, RACK_DIR + "/views"
+  set :views_folder,  RACK_DIR + "/views"
   
   # use Rack::Static, \
     # :urls=>%w{ /stylesheets/ /javascripts/ /images/ /index.html }, \
@@ -80,115 +80,129 @@ class Dex_Rack
     redirect to("/"), 302
   end
 
-  %w{ dex dex? }.each { |m|
-    eval %~
+  module Base # ============================================
+    
+    %w{ dex dex? }.each { |m|
+      eval %~
       def #{m} *args
         settings.#{m}(*args)
       end
-    ~
-  }
-
-  def recent page = :last, limit = 10
-    nav  = page_nav( dex.count, limit, page)
-
-    return redirect(to('/'), 302) if !nav
-      
-    nav[:prev_url] = "/recent/#{nav[:prev]}" if nav[:prev]
-    nav[:next_url] = "/recent/#{nav[:next]}" if nav[:next]
-    nav[:next_url] = "/" if nav[:next] == nav[:total]
-      
-    vars = nav.merge(
-      Hash[
-        :title => "Dex List",
-        :list  => dex.limit(nav[:limit], nav[:offset]).to_a.reverse,
-        :app => self
-      ])
-    
-    layout(vars, :index) 
-  end
-
-  def layout vars, file_name
-    Markaby::Builder.set(:indent, 2)
-    mab = Markaby::Builder.new
-    file = File.join(settings.views_folder, "/layout.rb")
-    vars[:view_file] = File.join(settings.views_folder, "#{file_name}.rb" )
-    vars[:app] = self
-    mab.instance_eval {
-      eval File.read(file), nil, file, 1
+      ~
     }
-    mab.to_s
-  end
 
-  def status_to_word num
-    case num
-    when 0
-      "Unresolved"
-    when 1
-      "Resolved"
+    def count
+      @count ||= dex.count
     end
-  end
 
-  def backtrace_to_html s
-    last_file = nil
-    str = ""
-    s.split("\n").map { |l|
-      file, num, code = l.split(':')
-      str.<< %!  
+    def list_recent limit, offset
+      dex.limit(limit, offset).to_a.reverse
+    end
+
+    def recent page = :last, limit = 10
+      nav  = page_nav( count, limit, page)
+
+      return redirect(to('/'), 302) if !nav
+
+      nav[:prev_url] = "/recent/#{nav[:prev]}" if nav[:prev]
+      nav[:next_url] = "/recent/#{nav[:next]}" if nav[:next]
+      nav[:next_url] = "/" if nav[:next] == nav[:total]
+
+      vars = nav.merge(
+        Hash[
+          :title => "Dex List",
+          :list  => dex.limit(nav[:limit], nav[:offset]).to_a.reverse,
+          :app => self
+        ])
+
+        layout(vars, :index) 
+    end
+
+    def layout vars, file_name
+      Markaby::Builder.set(:indent, 2)
+      mab = Markaby::Builder.new
+      file = File.join(settings.views_folder, "/layout.rb")
+      vars[:view_file] = File.join(settings.views_folder, "#{file_name}.rb" )
+      vars[:app] = self
+      mab.instance_eval {
+        eval File.read(file), nil, file, 1
+      }
+      mab.to_s
+    end
+
+    def status_to_word num
+      case num
+      when 0
+        "Unresolved"
+      when 1
+        "Resolved"
+      end
+    end
+
+    def backtrace_to_html s
+      last_file = nil
+      str = ""
+      s.split("\n").map { |l|
+        file, num, code = l.split(':')
+        str.<< %!  
         <div class="line">
           <span class="num">#{CGI::escapeHTML num}</span> 
           <span class="code">#{CGI::escapeHTML code}</span>
         </div>!
-      str.<< %!
+        str.<< %!
         <div class="file">#{CGI::escapeHTML file}</div>
-      ! if file != last_file
-      
-      last_file = file
-      str
-    }.join
-  end
+        ! if file != last_file
 
-  def human_time t
-    target = Time.now.utc.to_i - t.to_i
-    if target < 61
-      return "<1m ago"
-    else
-      ChronicDuration.output(target, :format=>:short).sub(/\d+s\Z/, '') + " ago"
+        last_file = file
+        str
+      }.join
     end
-  end
 
-  def page_nav count, div, page = :last
-    count = count.to_i
-
-    div   = div.to_i
-    total = ( count / Float(div) ).ceil
-    page  = total if page == :last
-    page  = page.to_i
-    
-    if count > 0 
-      if total < 1 || page < 1 || page > total || div < 2
-        return nil 
+    def human_time t
+      target = Time.now.utc.to_i - t.to_i
+      if target < 61
+        return "<1m ago"
+      else
+        ChronicDuration.output(target, :format=>:short).sub(/\d+s\Z/, '') + " ago"
       end
     end
+
+    def page_nav count, div, page = :last
+      count = count.to_i
+
+      div   = div.to_i
+      total = ( count / Float(div) ).ceil
+      page  = total if page == :last
+      page  = page.to_i
+
+      if count > 0 
+        if total < 1 || page < 1 || page > total || div < 2
+          return nil 
+        end
+      end
+
+      n = page + 1
+      n = nil if n > total
+      p = page - 1
+      p = nil if p < 1
+      offset = div * (page - 1)
+      offset = 0 if offset < 1
+
+      Hash[ 
+
+        :total => total, 
+        :next => n, 
+        :prev => p, 
+        :page => page,
+
+        :count => count,
+        :limit => div,
+        :offset => offset
+
+      ]
+    end
     
-    n = page + 1
-    n = nil if n > total
-    p = page - 1
-    p = nil if p < 1
-    offset = div * (page - 1)
-    offset = 0 if offset < 1
+  end # === Base =======================================================
 
-    Hash[ 
-      
-      :total => total, 
-      :next => n, 
-      :prev => p, 
-      :page => page,
-      
-      :count => count,
-      :limit => div,
-      :offset => offset
-      
-    ]
-  end
-
+  include Base
+  
 end # === class Dex_Rack

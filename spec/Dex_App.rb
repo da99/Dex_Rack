@@ -1,4 +1,41 @@
 
+describe "Dex_Rack" do
+  
+  it "has methods that can be overridden" do
+    m = Module.new {
+    def recent *args
+      'ok'
+    end
+
+    }
+    
+    d = Class.new(Dex_Rack) {
+      
+    include m
+    
+    def initialize
+    end
+
+    get "/new-recent" do
+      recent
+    end
+
+    }
+
+    def self.app
+      @app
+    end
+
+    @app = d
+    get "/new-recent"
+
+    last_response.body.should == 'ok'
+
+  end
+  
+end # === Dex_Rack
+
+
 describe "get /" do
   
   behaves_like 'Test DB'
