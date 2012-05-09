@@ -3,6 +3,7 @@ require 'Dex'
 require 'markaby'
 require 'chronic_duration'
 require 'cgi'
+require 'escape_utils'
 
 class Dex_Rack 
   
@@ -143,6 +144,10 @@ class Dex_Rack
       end
     end
 
+    def escape_html str
+      EscapeUtils.escape_html( str.encode('UTF-8') )
+    end
+
     def backtrace_to_html s
       last_file = nil
       str = ""
@@ -150,11 +155,11 @@ class Dex_Rack
         file, num, code = l.split(':')
         str.<< %!  
         <div class="line">
-          <span class="num">#{CGI::escapeHTML num}</span> 
-          <span class="code">#{CGI::escapeHTML code}</span>
+          <span class="num">#{num}</span> 
+          <span class="code">#{escape_html code}</span>
         </div>!
         str.<< %!
-        <div class="file">#{CGI::escapeHTML file}</div>
+        <div class="file">#{escape_html file}</div>
         ! if file != last_file
 
         last_file = file
