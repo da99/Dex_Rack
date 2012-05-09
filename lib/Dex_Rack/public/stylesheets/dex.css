@@ -183,7 +183,7 @@ div.line {
 }
 
 div.file {
-  margin: 0 0 10px 0;
+  margin: 15px 0 0 0;
   font-weight: bold;
   padding: 5px;
 }

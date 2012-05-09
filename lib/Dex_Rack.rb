@@ -152,17 +152,21 @@ class Dex_Rack
       last_file = nil
       str = ""
       s.split("\n").each { |l|
+        
         file, num, code = l.split(':')
-        str.<< %!  
-        <div class="line">
-          <span class="num">#{num}</span> 
-          <span class="code">#{escape_html code}</span>
-        </div>!
+        
         str.<< %!
-        <div class="file">#{escape_html file}</div>
+          <div class="file">#{escape_html file}</div>
         ! if file != last_file
 
+        str.<< %!  
+          <div class="line">
+            <span class="num">#{num}</span> 
+            <span class="code">#{escape_html code}</span>
+          </div>!
+          
         last_file = file
+        
       }
 
       str
