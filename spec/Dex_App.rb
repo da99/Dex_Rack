@@ -103,21 +103,21 @@ describe "get /:id/toggle" do
   
 end # === put /:id/status
 
-describe "delete /:id" do
+describe "get /:id/delete" do
   
   behaves_like 'Test DB'
   
   it "deletes record" do
       Dex.insert(except("Deleted"))
       r = Dex.recent(1)
-      delete "/#{r[:id]}"
+      get "/#{r[:id]}/delete"
       Dex.count.should == 0
   end
 
   it "redirects to / 303" do
       Dex.insert(except("Deleted"))
       r = Dex.recent(1)
-      delete "/#{r[:id]}"
+      get "/#{r[:id]}/delete"
       should_redirect_to "/"
   end
 

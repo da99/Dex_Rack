@@ -19,7 +19,8 @@ div.header! {
 div.content! {
   div {
     span.status.send vars[:status_class].downcase, vars[:status_word]
-    a.button(:href=>"/#{vars[:record][:id]}/toggle") { "Toggle" }
+    a.toggle.button(:href=>"/#{vars[:record][:id]}/toggle") { "Toggle" }
+    a.delete.button(:href=>"/#{vars[:record][:id]}/delete") { "Delete" }
   }
 
   unless vars[:table_keys].empty?

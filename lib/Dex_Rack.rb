@@ -68,8 +68,8 @@ class Dex_Rack
     redirect to("/#{r[:id]}"), 302
   end
 
-  delete "/:id" do | id |
-    dex.filter(:id=>id).delete
+  get "/:id/delete" do | id |
+    delete_id id
     redirect to('/'), 303
   end
 
@@ -94,6 +94,10 @@ class Dex_Rack
 
     def count
       @count ||= dex.count
+    end
+
+    def delete_id id
+      dex.filter(:id=>id).delete
     end
 
     def find_id id
