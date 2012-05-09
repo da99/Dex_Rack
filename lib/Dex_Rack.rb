@@ -33,8 +33,9 @@ class Dex_Rack
     recent page
   end
 
-  get %r!\A/(\d+)\Z! do | id |
-    r = dex.filter(:id=>id).first
+  get '/:id' do | id |
+    r = find_id( id )
+    pass unless r
 
     if r
       vars= Hash[
@@ -94,6 +95,10 @@ class Dex_Rack
       @count ||= dex.count
     end
 
+    def find_id id
+      r = dex.filter(:id=>id).first
+    end
+    
     def list_recent limit, offset
       dex.limit(limit, offset).to_a.reverse
     end
