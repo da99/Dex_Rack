@@ -151,7 +151,7 @@ class Dex_Rack
     def backtrace_to_html s
       last_file = nil
       str = ""
-      s.split("\n").map { |l|
+      s.split("\n").each { |l|
         file, num, code = l.split(':')
         str.<< %!  
         <div class="line">
@@ -163,8 +163,9 @@ class Dex_Rack
         ! if file != last_file
 
         last_file = file
-        str
-      }.join
+      }
+
+      str
     end
 
     def human_time t
