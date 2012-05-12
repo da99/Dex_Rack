@@ -4,6 +4,7 @@ require 'markaby'
 require 'chronic_duration'
 require 'cgi'
 require 'escape_utils'
+require 'Backtrace_Array'
 
 class Dex_Rack 
   
@@ -51,7 +52,7 @@ class Dex_Rack
       vars[:status_class] = status.downcase
       vars[:status_word]  = status
       r[:human_time]   = human_time(r[:created_at])
-      r[:backtrace]    = backtrace_to_html(r[:backtrace])
+      r[:backtrace]    = Backtrace_Array(r[:backtrace])
       vars[:table_keys] << :human_time
       layout vars, :record 
     else
@@ -150,30 +151,6 @@ class Dex_Rack
 
     def escape_html str
       EscapeUtils.escape_html( str.encode('UTF-8') )
-    end
-
-    def backtrace_to_html s
-      last_file = nil
-      str = ""
-      s.split("\n").each { |l|
-        
-        file, num, code = l.split(':')
-        
-        str.<< %!
-          <div class="file">#{escape_html file}</div>
-        ! if file != last_file
-
-        str.<< %!  
-          <div class="line">
-            <span class="num">#{num}</span> 
-            <span class="code">#{escape_html code}</span>
-          </div>!
-          
-        last_file = file
-        
-      }
-
-      str
     end
 
     def human_time t

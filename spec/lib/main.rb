@@ -16,6 +16,7 @@ $LOAD_PATH.unshift( Gem_Dir + "/lib" )
 Bacon.summary_on_exit
 
 require 'Bacon_Colored'
+require 'Bacon_Rack'
 require 'pry'
 require 'rack/test'
 require 'Dex_Rack'

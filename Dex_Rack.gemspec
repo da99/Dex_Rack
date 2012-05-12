@@ -11,8 +11,8 @@ Gem::Specification.new do |s|
   s.homepage    = "https://github.com/da99/Dex_Rack"
   s.summary     = %q{A Rack app to display Dex exceptions.}
   s.description = %q{
-It is a web-frontend for Dex. 
-Update and view exceptions logged with the Dex gem.
+    It is a web-frontend for Dex. 
+    Update and view exceptions logged with the Dex gem.
   }
 
   s.files         = `git ls-files`.split("\n")
@@ -22,9 +22,10 @@ Update and view exceptions logged with the Dex gem.
 
   s.add_development_dependency 'bacon'
   s.add_development_dependency 'rake'
-  s.add_development_dependency 'Bacon_Colored'
   s.add_development_dependency 'pry'
   s.add_development_dependency 'rack-test'
+  s.add_development_dependency 'Bacon_Colored'
+  s.add_development_dependency 'Bacon_Rack'
   
   # Specify any dependencies here; for example:
   s.add_runtime_dependency 'sinatra'
@@ -34,4 +35,5 @@ Update and view exceptions logged with the Dex gem.
   s.add_runtime_dependency 'chronic_duration'
   s.add_runtime_dependency 'Dex', ">= 0.2.2" 
   s.add_runtime_dependency 'escape_utils'
+  s.add_runtime_dependency 'Backtrace_Array'
 end

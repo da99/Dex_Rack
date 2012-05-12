@@ -34,19 +34,36 @@ div.content! {
     }
   end
 
-  div.toggle_backtrace! {
-    div {
-      a.button.show_backtrace!(:href=>"#show") { "Show Backtrace" }
+  unless vars[:record][:backtrace].empty?
+    
+    div.toggle_backtrace! {
+      div {
+        a.button.show_backtrace!(:href=>"#show") { "Show Backtrace" }
+      }
+      div.omega {
+        a.button.hide_backtrace!(:href=>"#hide") { "Hide Backtrace" }
+      }
     }
-    div.omega {
-      a.button.hide_backtrace!(:href=>"#hide") { "Hide Backtrace" }
-    }
-  }
 
-  h3 "Backtrace:"
-  div.backtrace! {
-    vars[:record][:backtrace] 
-  }
+
+    
+    div.backtrace! {
+      h3 "Backtrace:"
+      div.body {
+        vars[:record][:backtrace].each { |file, lines|
+          div.file file.to_s
+          div.lines {
+            lines.each { |l|
+              div.line {
+                span.num("#{l.first}:")
+                span.code l[1].to_s
+              }
+            }
+          }
+        }
+      }
+    }
+  end
 
 
 }

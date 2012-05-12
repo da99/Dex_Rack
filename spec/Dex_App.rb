@@ -76,10 +76,22 @@ describe "get /:id" do
   
   behaves_like 'Test DB'
   
-  it "displays record" do
-      id = Dex.insert(except "rand err")
-      get "/#{id}"
-      should_render "rand err"
+  it "renders record" do
+    id = Dex.insert(except "rand err")
+    get "/#{id}"
+    renders 200, %r"rand err"
+  end
+
+  it "renders non-standard backtrace: <<< Rack App" do
+    id = Dex.insert(except("rand"), :backtrace=>["<<< Rack App"])
+    get "/#{id}"
+    renders 200, %r"&lt;&lt;&lt; Rack App"
+  end
+
+  it "renders non-standard backtrace: file:13:code:1:2:3:" do
+    id = Dex.insert(except("rand"), :backtrace=>["file:13:code:1:2:3:"])
+    get "/#{id}"
+    renders 200, %r">code:1:2:3"
   end
 
 end # === get /:id
