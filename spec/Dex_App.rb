@@ -83,13 +83,13 @@ describe "get /:id" do
   end
 
   it "renders non-standard backtrace: <<< Rack App" do
-    id = Dex.insert(except("rand"), :backtrace=>["<<< Rack App"])
+    id = Dex.insert(except("rand"), :backtrace=>"<<< Rack App")
     get "/#{id}"
     renders 200, %r"&lt;&lt;&lt; Rack App"
   end
 
   it "renders non-standard backtrace: file:13:code:1:2:3:" do
-    id = Dex.insert(except("rand"), :backtrace=>["file:13:code:1:2:3:"])
+    id = Dex.insert(except("rand"), :backtrace=>"file:13:code:1:2:3:")
     get "/#{id}"
     renders 200, %r">code:1:2:3"
   end
