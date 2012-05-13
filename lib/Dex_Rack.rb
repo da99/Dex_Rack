@@ -126,7 +126,7 @@ class Dex_Rack
       return redirect(to('/'), 302) if !nav
 
       results = Hash[
-        :title => "Dex List",
+        :title => "Page #{page}",
         :list  => dex.limit(nav[:limit], nav[:offset]).to_a.reverse,
         :app => self
       ]
