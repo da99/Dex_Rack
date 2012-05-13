@@ -12,6 +12,7 @@ class Dex_Rack
   
   set :dex, ( Dex.db("/tmp/dex.rack.sample.db") && Dex )
 
+  enable :sessions
   use Rack::Lint
   
   set :public_folder, RACK_DIR + "/public"
@@ -36,6 +37,10 @@ class Dex_Rack
   end
 
   get '/:id' do | id |
+    if request.referer
+      session[:page_list] = request.referer
+    end
+
     r = find_id( id )
     pass unless r
 
@@ -66,7 +71,9 @@ class Dex_Rack
     r = dex.filter(:id=>id).first
     s = r[:status] == 0 ? 1 : 0
     dex.filter(:id=>id).update(:status=>s)
-    redirect to("/#{r[:id]}"), 302
+    
+    page = session[:page_list] || "/#{r[:id]}"
+    redirect to(page), 302
   end
 
   get "/:id/delete" do | id |

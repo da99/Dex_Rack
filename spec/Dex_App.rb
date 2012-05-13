@@ -42,7 +42,7 @@ describe "get /" do
 
   it "renders message when there are no exceptions" do
     get "/"
-    should_render %!No exceptions!
+    renders %r!No exceptions!
   end
 
   it "renders a recent list of 10" do
@@ -101,16 +101,23 @@ describe "get /:id/toggle" do
   behaves_like 'Test DB'
   
   it "updates status of record" do
-      id = Dex.insert(except "rand err")
-      get "/#{id}/toggle"
-      Dex.filter(:id=>id).first[:status]
-      .should == 1
+    id = Dex.insert(except "rand err")
+    get "/#{id}/toggle"
+    Dex.filter(:id=>id).first[:status]
+    .should == 1
   end
 
   it "redirects to /:id 302" do
-      id = Dex.insert(except "rand err")
-      get "/#{id}/toggle"
-      should_redirect_to "/#{id}", 302
+    id = Dex.insert(except "rand err")
+    get "/#{id}/toggle"
+    redirects_to 302, "/#{id}"
+  end
+
+  it "redirects to PAGE_LIST 302 if set in session" do
+    id = Dex.insert( except "rand err")
+    get "/#{id}", {}, {'HTTP_REFERER'=>"/page/list"}
+    get "/#{id}/toggle"
+    redirects_to 302, "/page/list"
   end
   
 end # === put /:id/status
@@ -130,7 +137,7 @@ describe "get /:id/delete" do
       Dex.insert(except("Deleted"))
       r = Dex.recent(1)
       get "/#{r[:id]}/delete"
-      should_redirect_to "/"
+      redirects_to "/"
   end
 
 end # === delete /:id

@@ -39,24 +39,13 @@ shared "Test DB" do
 end
 
 class Bacon::Context
+  
   include Rack::Test::Methods
 
   def app
     Dex_Rack
   end
 
-  def should_render txt
-    last_response.should.be.ok
-    r = txt.respond_to?(:~) ? txt : %r!#{txt}!
-    last_response.body.should.match r
-  end
-
-  def should_redirect_to url, status = 303
-    last_response.status.should == status
-    last_response['Location'].sub( %r!http://(www.)?example.(com|org)!, '' )
-    .should == url
-  end
-    
 end # === class Bacon::Context
 
 
