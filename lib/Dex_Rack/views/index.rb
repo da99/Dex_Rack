@@ -46,7 +46,11 @@ div.recent_nav! {
 
 if vars[:list].empty?
   div.empty { 
-    p "No exceptions created." 
+    if vars[:app].request.path_info == '/'
+      p "No unresolved exceptions." 
+    else
+      p "No exceptions found."
+    end
     a.button( :href=>"/create-sample" ) {
       "Create Sample Exception"
     }

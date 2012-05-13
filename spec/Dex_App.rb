@@ -42,7 +42,7 @@ describe "get /" do
 
   it "renders message when there are no exceptions" do
     get "/"
-    renders %r!No exceptions!
+    renders %r!No unresolved exceptions!
   end
 
   it "renders a recent list of 10" do
