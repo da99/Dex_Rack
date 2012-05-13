@@ -101,6 +101,13 @@ describe "get /:id" do
     renders 200, %r">code:1:2:3"
   end
 
+  it "does not render any fields that are nil" do
+    target = "invisibily"
+    id = Dex.insert(except("rand"), target=>nil)
+    get "/#{id}"
+    last_response.body.should.not.match %r!#{target}!
+  end
+
 end # === get /:id
 
 describe "get /:id/toggle" do

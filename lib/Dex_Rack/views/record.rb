@@ -26,10 +26,12 @@ div.content! {
   unless vars[:table_keys].empty?
     table {
       vars[:table_keys].each { |k|
-        tr {
-          td.key k.inspect 
-          td.val vars[:record][k]
-        }
+        if vars[:record][k]
+          tr {
+            td.key k.inspect 
+            td.val vars[:record][k]
+          }
+        end
       }
     }
   end
