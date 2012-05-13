@@ -46,12 +46,19 @@ describe "get /" do
   end
 
   it "renders a recent list of 10" do
-      5.times { |i| Dex.insert except("Err: #{i}") }
-      
-      get "/"
-      5.times { |i|
-        last_response.body.should.match %r!Err: #{i}!
-      }
+    5.times { |i| Dex.insert except("Err: #{i}") }
+
+    get "/"
+    5.times { |i|
+      last_response.body.should.match %r!Err: #{i}!
+    }
+  end
+
+  it "renders a link to the last page of results" do
+    15.times { |i| Dex.insert except("Err: #{i}") }
+    get "/"
+    renders %r!/recent/2">!
+    renders %r!Full list\ *</a>!
   end
 
 end # === get /

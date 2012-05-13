@@ -30,12 +30,16 @@ end
 
 div.recent_nav! {
 
-  if vars[:prev_url]
-    a(:href=>vars[:prev_url]) { "<< Back in Time" }
-  end
+  if vars[:app].request.path_info == '/'
+    a(:href=>vars[:last_url]) { "<< Full list" }
+  else
+    if vars[:prev_url]
+      a(:href=>vars[:prev_url]) { "<< Back in Time" }
+    end
 
-  if vars[:next_url]
-    a(:href=>vars[:next_url]) { "Forward In Time >>" }
+    if vars[:next_url]
+      a(:href=>vars[:next_url]) { "Forward In Time >>" }
+    end
   end
 
 }

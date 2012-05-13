@@ -29,11 +29,19 @@ class Dex_Rack
   end
 
   get "/" do
-    recent
+    nav = page_nav( count, 10, :last)
+    nav[:link_to_list] = true
+    
+    results = Hash[
+      :title => "Dex List",
+      :list  => dex.filter(:status => 0),
+      :app => self
+    ]
+    layout nav.merge(results), :index
   end
 
   get "/recent/:page" do | page |
-    recent page
+    layout recent(page), :index
   end
 
   get '/:id' do | id |
@@ -111,28 +119,19 @@ class Dex_Rack
     def find_id id
       r = dex.filter(:id=>id).first
     end
-    
-    def list_recent limit, offset
-      dex.limit(limit, offset).to_a.reverse
-    end
 
     def recent page = :last, limit = 10
       nav  = page_nav( count, limit, page)
 
       return redirect(to('/'), 302) if !nav
 
-      nav[:prev_url] = "/recent/#{nav[:prev]}" if nav[:prev]
-      nav[:next_url] = "/recent/#{nav[:next]}" if nav[:next]
-      nav[:next_url] = "/" if nav[:next] == nav[:total]
-
-      vars = nav.merge(
-        Hash[
-          :title => "Dex List",
-          :list  => list_recent(nav[:limit], nav[:offset]),
-          :app => self
-        ])
-
-        layout(vars, :index) 
+      results = Hash[
+        :title => "Dex List",
+        :list  => dex.limit(nav[:limit], nav[:offset]).to_a.reverse,
+        :app => self
+      ]
+      
+      nav.merge results
     end
 
     def layout vars, file_name
@@ -190,7 +189,7 @@ class Dex_Rack
       offset = div * (page - 1)
       offset = 0 if offset < 1
 
-      Hash[ 
+      page_nav_urls Hash[ 
 
         :total => total, 
         :next => n, 
@@ -204,6 +203,12 @@ class Dex_Rack
       ]
     end
     
+    def page_nav_urls nav
+      nav[:prev_url] = "/recent/#{nav[:prev]}" if nav[:prev]
+      nav[:next_url] = "/recent/#{nav[:next]}" if nav[:next]
+      nav[:last_url] = "/recent/#{nav[:total]}" 
+      nav
+    end
   end # === Base =======================================================
 
   include Base
